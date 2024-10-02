@@ -74,5 +74,38 @@ class KVPair<K, V> {
     } // if
   } // toString()
 
-} // class KVPair
+  // +----------------+----------------------------------------------
+  // | Getter methods |
+  // +----------------+
 
+  /**
+   * Retrieves the key of this key-value pair.
+   *
+   * @return The key of this pair.
+   */
+  public K getKey() {
+    return this.key;
+  } // getKey()
+
+  /**
+   * Retrieves the value of this key-value pair.
+   *
+   * @return The value of this pair.
+   */
+  public V getValue() {
+    return this.val;
+  } // getValue()
+
+    // +----------------+----------------------------------------------
+  // | Setter methods |
+  // +----------------+
+
+  /**
+   * Updates the value associated with the key.
+   *
+   * @param value The new value to associate with the key.
+   */
+  public void setValue(V value) {
+    this.val = value;
+  } // setValue()
+} // class KVPair
