@@ -62,7 +62,15 @@ public class AssociativeArray<K, V> {
    * @return a new copy of the array
    */
   public AssociativeArray<K, V> clone() {
-    return null; // STUB
+    AssociativeArray<K, V> clonedArray = new AssociativeArray<>();
+    clonedArray.pairs = java.util.Arrays.copyOf(this.pairs, this.pairs.length);
+    for (int i = 0; i < this.size; i++) {
+      if (this.pairs[i] != null) {
+        clonedArray.pairs[i] = this.pairs[i].clone();
+      } // end of for loop
+    } // end of for loop
+    clonedArray.size = this.size;
+    return clonedArray;
   } // clone()
 
   /**
@@ -71,7 +79,19 @@ public class AssociativeArray<K, V> {
    * @return a string of the form "{Key0:Value0, Key1:Value1, ... KeyN:ValueN}"
    */
   public String toString() {
-    return "{}"; // STUB
+    if (this.size == 0) {
+      return "{}";
+    } // end of if loop
+    StringBuilder sb = new StringBuilder();
+    sb.append("{");
+    for (int i = 0; i < size; i++) {
+      sb.append(pairs[i].getKey()).append(":").append(pairs[i].getValue());
+      if (i < size - 1) {
+        sb.append(", ");
+      } // end of if loop
+    } // end of for loop
+    sb.append("}");
+    return sb.toString();
   } // toString()
 
   // +----------------+----------------------------------------------
@@ -91,7 +111,20 @@ public class AssociativeArray<K, V> {
    *   If the client provides a null key.
    */
   public void set(K key, V value) throws NullKeyException {
-    // STUB
+    if (key == null) {
+      throw new NullKeyException("Key cannot be null.");
+    } // end of if loop
+    for (int i = 0; i < size; i++) {
+      if (pairs[i] != null && pairs[i].getKey().equals(key)) {
+        pairs[i].setValue(value); // Update the value
+        return;
+      } // end of if loop
+    } // end of for loop
+    if (size >= pairs.length) {
+      expand();
+    } // end of if loop
+    pairs[size] = new KVPair<>(key, value);
+    size++;
   } // set(K,V)
 
   /**
@@ -107,7 +140,8 @@ public class AssociativeArray<K, V> {
    *   when the key is null or does not appear in the associative array.
    */
   public V get(K key) throws KeyNotFoundException {
-    return null; // STUB
+    int index = find(key);
+    return pairs[index].getValue();
   } // get(K)
 
   /**
@@ -120,7 +154,12 @@ public class AssociativeArray<K, V> {
    * @return true if the key appears and false otherwise.
    */
   public boolean hasKey(K key) {
-    return false; // STUB
+    try {
+      find(key);
+      return true;
+    } catch (KeyNotFoundException e) {
+      return false;
+    } // end of try and catch
   } // hasKey(K)
 
   /**
@@ -132,7 +171,14 @@ public class AssociativeArray<K, V> {
    *   The key to remove.
    */
   public void remove(K key) {
-    // STUB
+    try {
+      int index = find(key);
+      pairs[index] = pairs[size - 1];
+      pairs[size - 1] = null;
+      size--;
+    } catch (KeyNotFoundException e) {
+      // Key does not exist; do nothing.
+    } // end of try catch
   } // remove(K)
 
   /**
@@ -169,7 +215,12 @@ public class AssociativeArray<K, V> {
    *   If the key does not appear in the associative array.
    */
   int find(K key) throws KeyNotFoundException {
-    throw new KeyNotFoundException();   // STUB
+    for (int i = 0; i < size; i++) {
+      if (pairs[i] != null && pairs[i].getKey().equals(key)) {
+        return i;
+      } // end of if loop
+    } // end of for loop
+    throw new KeyNotFoundException("Key not found: " + key);
   } // find(K)
 
 } // class AssociativeArray
