@@ -7,7 +7,9 @@ Cite : https://rebelsky.cs.grinnell.edu/Courses/CSC207/2024Fa/mps/mp04.html
 
 ## Classes
 
-1. Not known yet
+Github Link : https://github.com/slokgrinnell/mp-associative-arrays-maven
+
+Now has name on each file and the github link
 
 ## Authors - Slok Rajbhandari
 ## Acknowledgements - https://rebelsky.cs.grinnell.edu/Courses/CSC207/2024Fa/mps/mp04.html
